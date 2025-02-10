@@ -29,7 +29,7 @@ app.post('/usuarios', async (req, res) => {
 });
 
 
-app.get('/usuarios', async (req, res) => {
+app.get('/get-usuarios', async (req, res) => {
     try {
         const users = await prisma.user.findMany();  // Recupera todos os usuários do banco
         res.status(200).json(users);  // Retorna os usuários
