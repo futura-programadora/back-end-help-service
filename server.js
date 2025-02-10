@@ -5,6 +5,8 @@ const app = express()
 const prisma = new PrismaClient()
 app.use(express.json());
 
+app.use(cors());
+
 //rotas
 
 app.post('/usuarios', async (req, res) => {
