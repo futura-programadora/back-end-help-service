@@ -10,7 +10,7 @@ app.use(express.json());
 app.use(cors());
 
 
-//rotas
+//ROTAS DO USUARIO
 
 app.post('/usuarios', async (req, res) => {
     try {
@@ -37,6 +37,18 @@ app.get('/get-usuarios', async (req, res) => {
         res.status(500).json({ error: 'Erro ao buscar usuários' });
     }
 });
+
+
+//ROTAS DO SERVIÇO
+
+
+//ROTAS DE CATEGORIAS
+
+
+//ROTAS DE CONFIGURAÇÕES
+
+
+
 
 
 
