@@ -7,7 +7,9 @@ app.use(express.json());
 
 //rotas
 
-
+export default function handler(req, res) {
+    res.status(200).json({ message: 'Olá, Vercel!' });
+}
 
 
 const PORT = process.env.PORT || 3001; app.listen(PORT, () => {
