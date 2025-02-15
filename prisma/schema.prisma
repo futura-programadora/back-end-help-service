@@ -19,3 +19,28 @@ model User {
   password          String
   createdAt DateTime @default(now()) // Data de criação da conta
 }
+
+model admin {
+   id                String   @id @default(auto()) @map("_id") @db.ObjectId
+   nome String
+   password   String
+   createdAt DateTime @default(now()) // Data de criação da conta
+}
+
+model Parcerias {
+  id                String   @id @default(auto()) @map("_id") @db.ObjectId
+  nome  String @unique
+  idade   String
+  profissao String 
+  numero  String
+  email   String
+  createdAt DateTime @default(now()) // Data de criação da conta
+}
+
+model Contato {
+   id                String   @id @default(auto()) @map("_id") @db.ObjectId
+   email  String
+   mensagem   String
+   createdAt DateTime @default(now()) // Data de criação da conta
+}
+
