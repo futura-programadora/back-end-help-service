@@ -1,7 +1,6 @@
 import express from 'express'
 import { PrismaClient } from '@prisma/client';
 import cors from 'cors';
-import bcrypt from 'bcryptjs';  // ou require('bcryptjs') se estiver usando CommonJS
 
 import axios from 'axios'; 
 
@@ -102,9 +101,9 @@ app.post('/parcerias', async (req, res) => {
       console.error('Erro ao criar parceria:', erro);
       return res.status(500).json({ erro: 'Erro interno do servidor' });
     }
-  });
+});
   
-app.get("/parcerias", async (req, res) => {
+app.get("/parcerias-get", async (req, res) => {
 try {
     // Buscar todas as parcerias no banco de dados
     const parcerias = await prisma.parcerias.findMany(); // Utiliza o Prisma para pegar todas as parcerias
