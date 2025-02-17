@@ -21,10 +21,10 @@ model User {
 }
 
 model admin {
-   id                String   @id @default(auto()) @map("_id") @db.ObjectId
-   nome String
-   password   String
-   createdAt DateTime @default(now()) // Data de criação da conta
+  id                String   @id @default(auto()) @map("_id") @db.ObjectId
+  nome String
+  password   String
+  createdAt DateTime @default(now()) // Data de criação da conta
 }
 
 model Parcerias {
@@ -38,9 +38,9 @@ model Parcerias {
 }
 
 model Contato {
-   id                String   @id @default(auto()) @map("_id") @db.ObjectId
-   email  String
-   mensagem   String
-   createdAt DateTime @default(now()) // Data de criação da conta
+  id                String   @id @default(auto()) @map("_id") @db.ObjectId
+  email  String
+  mensagem   String
+  createdAt DateTime @default(now()) // Data de criação da conta
 }
 
