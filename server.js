@@ -138,6 +138,106 @@ app.get('/get-usuarios', async (req, res) => {
 
 // === CONFIGURAÇÕES DO HELPSERVICE ===
 
+//Cadastro de serviço
+app.post('/servico', async (req, res) => {
+    try {
+        const servico = await prisma.servico.create({
+             data: {
+                servico: req.body.servico,
+                descricao: req.body.descricao,
+                categoria: req.body.categoria,
+                preco: req.body.preco,
+                pagamento: req.body.pagamento,
+                email: req.body.email
+             }
+        })
+
+        res.status(201).json(servico);
+    } catch (error) {
+        res.status(500).json({message: 'Erro ao tentar cadastrar serviço'})
+    }
+})
+
+// Pegar serviços através da categoria
+
+// excluir serviço
+
+// editar serviço
+
+//Criar uma categoria
+
+app.post('/categoria', async (req, res) => {
+    try {
+        const categoria = await prisma.categorias.create({
+            data: {
+                nome: req.body.nome,
+                sobre: req.body.sobre,
+                email: req.body.email
+            }
+        })
+
+        res.status(201).json(categoria)
+    } catch (error) {
+        res.status(500).json({message: 'Erro ao criar categoria'})
+    }
+})
+
+//apagar categoria
+
+//buscar categorias
+
+
+//Criar conta profissional
+
+app.post('/profissional', async (req, res) => {
+    try {
+        const profissional = await prisma.profissional.create({
+            data: {
+                email: req.body.email,
+                senha: req.body.senha,
+                telefone: req.body.telefone,
+                cidade: req.body.cidade,
+            }
+        })
+
+        res.status(201).json(profissional)
+    } catch (error) {
+        res.status(500).json({message: 'Erro ao tentar criar conta profissional'})
+    }
+})
+
+//logar como profissiional
+
+//excluir conta profissional 
+
+//editar conta
+
+
+//Usuario normal 
+
+app.post('/contratante', async (req, res) => {
+    try {
+        const contratante = await prisma.user.create({
+            data: {
+                email: req.body.email,
+                senha: req.body.senha,
+                telefone: req.body.telefone,
+                cidade: req.body.cidade,
+            }
+        })
+
+        res.status(201).json(contratante)
+    } catch (error) {
+        res.status(500).json({message: 'Erro ao tentar criar conta como contratante'})
+    }
+})
+
+// logar como contratante
+
+// excluir conta como contratante
+
+// editar conta contratante
+
 
 
 

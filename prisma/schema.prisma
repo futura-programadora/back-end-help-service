@@ -55,10 +55,21 @@ model Profissional {
   createdAt DateTime @default(now()) // Data de criação da conta
 }
 
+model Contratante {
+  id                String   @id @default(auto()) @map("_id") @db.ObjectId
+  email   String
+  senha   String
+  telefone    String
+  cidade      String
+  createdAt DateTime @default(now()) // Data de criação da conta
+}
+
+
 model Categorias {
   id                String   @id @default(auto()) @map("_id") @db.ObjectId
   nome  String
   sobre   String
+  email   String
   createdAt DateTime @default(now()) // Data de criação da conta
 }
 
@@ -69,5 +80,6 @@ model Servico {
   categoria    String
   preco         String
   pagamento   String
+  email     String
   createdAt DateTime @default(now()) // Data de criação da conta
 }
