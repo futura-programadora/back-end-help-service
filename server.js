@@ -136,9 +136,11 @@ app.get('/get-usuarios', async (req, res) => {
     }
 });
 
-// === CONFIGURAÇÕES DO SERVIÇO ===
+// === CONFIGURAÇÕES DO HELPSERVICE ===
 
-// Você pode adicionar mais rotas de configurações ou outras se necessário
+
+
+
 
 
 // Iniciar o servidor

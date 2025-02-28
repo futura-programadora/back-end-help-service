@@ -44,3 +44,30 @@ model Contato {
   createdAt DateTime @default(now()) // Data de criação da conta
 }
 
+// HelpService
+
+model Profissional {
+  id                String   @id @default(auto()) @map("_id") @db.ObjectId
+  email   String
+  senha   String
+  telefone    String
+  cidade      String
+  createdAt DateTime @default(now()) // Data de criação da conta
+}
+
+model Categorias {
+  id                String   @id @default(auto()) @map("_id") @db.ObjectId
+  nome  String
+  sobre   String
+  createdAt DateTime @default(now()) // Data de criação da conta
+}
+
+model Servico {
+  id                String   @id @default(auto()) @map("_id") @db.ObjectId
+  servico   String
+  descricao   String
+  categoria    String
+  preco         String
+  pagamento   String
+  createdAt DateTime @default(now()) // Data de criação da conta
+}
