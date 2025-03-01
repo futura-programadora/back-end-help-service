@@ -16,7 +16,9 @@ datasource db {
 model User {
   id                String   @id @default(auto()) @map("_id") @db.ObjectId
   email             String
-  password          String
+  senha          String
+  telefone    String
+  cidade    String
   createdAt DateTime @default(now()) // Data de criação da conta
 }
 
