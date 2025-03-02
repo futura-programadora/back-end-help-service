@@ -110,23 +110,8 @@ app.get("/parcerias-get", async (req, res) => {
 
 // === ROTAS DE USUÁRIOS ===
 
-// Criar novo usuário
-app.post('/usuarios', async (req, res) => {
-    try {
-        const user = await prisma.user.create({
-            data: {
-                email: req.body.email,  // Usando 'email' corretamente
-                password: req.body.password,
-            },
-        });
-
-        res.status(201).json(user);  // Retorna o usuário criado
-    } catch (error) {
-        res.status(500).json({ error: 'Erro ao criar usuário' });
-    }
-});
-
 // Obter todos os usuários
+
 app.get('/get-usuarios', async (req, res) => {
     try {
         const users = await prisma.user.findMany();  // Recupera todos os usuários do banco
@@ -208,9 +193,69 @@ app.post('/profissional', async (req, res) => {
 
 //logar como profissiional
 
+app.post('/profissional/login', async (req, res) => {
+    const { email, senha } = req.body;
+
+    try {
+        const admin = await prisma.profissional.findFirst({
+            where: {
+                email: email,  // Nome do administrador
+                senha: senha,  // Senha fornecida
+            },
+        });
+
+        if (!admin) {
+            return res.status(404).json({ message: 'perfil não encontrado ou credenciais incorretas' });
+        }
+
+        res.status(200).json({ message: 'Login de contratante bem-sucedida!', admin });
+    } catch (error) {
+        console.error('Erro ao tentar logar como contratante:', error);
+        res.status(500).json({ error: 'Erro ao tentar logar como contratante', detalhes: error.message });
+    }
+});
+
+// pegar dados do profissional
+
+app.get('/get-profissionais', async (req, res) => {
+    try {
+        const profissional = await prisma.profissional.findMany();  // 
+        
+        res.status(200).json(profissional); 
+
+    } catch (error) {
+        res.status(500).json({ error: 'Erro ao buscar profissionais' });
+    }
+});
+
 //excluir conta profissional 
 
 //editar conta
+
+// Supondo que você tenha um modelo Profissional já configurado no Prisma
+
+app.put('/atualizar-profissional/:id', async (req, res) => {
+    const { id } = req.params;  // Obtém o id do profissional da URL
+    const { email, senha, telefone, cidade } = req.body;  // Recebe os dados para atualização
+
+    try {
+        // Atualiza os dados no banco de dados
+        const profissionalAtualizado = await prisma.profissional.update({
+            where: { id: id },
+            data: {
+                email: email,
+                senha: senha,
+                telefone: telefone,
+                cidade: cidade
+            }
+        });
+
+        res.status(200).json(profissionalAtualizado); // Retorna o profissional atualizado
+    } catch (error) {
+        console.error('Erro ao atualizar o profissional:', error);
+        res.status(500).json({ error: 'Erro ao atualizar o profissional' });
+    }
+});
 
 
 //Usuario normal 
@@ -234,9 +279,84 @@ app.post('/contratante', async (req, res) => {
 
 // logar como contratante
 
+app.post('/contratante/login', async (req, res) => {
+    const { email, senha } = req.body;
+
+    try {
+        // Encontrar o contratante no banco de dados com email e senha
+        const contratante = await prisma.user.findFirst({
+            where: {
+                email: email,  // Nome do administrador
+                senha: senha,  // Senha fornecida
+            },
+        });
+
+        // Verificar se o contratante foi encontrado
+        if (!contratante) {
+            return res.status(404).json({ message: 'Perfil não encontrado ou credenciais incorretas' });
+        }
+
+        // Retornar todos os dados do contratante
+        res.status(200).json({
+            message: 'Login de contratante bem-sucedido!',
+            contratante: {
+                id: contratante.id,
+                email: contratante.email,
+                telefone: contratante.telefone,
+                cidade: contratante.cidade,
+                createdAt: contratante.createdAt,
+            },
+        });
+    } catch (error) {
+        console.error('Erro ao tentar logar como contratante:', error);
+        res.status(500).json({ error: 'Erro ao tentar logar como contratante', detalhes: error.message });
+    }
+});
+
+
+//pegar dados do usuario
+
+app.get('/get-contratantes', async (req, res) => {
+    try {
+        const contratantes = await prisma.user.findMany();  // 
+        
+        res.status(200).json(contratantes); 
+
+    } catch (error) {
+        res.status(500).json({ error: 'Erro ao buscar contratantes' });
+    }
+});
+  
+
 // excluir conta como contratante
 
 // editar conta contratante
+
+// Exemplo com Express e Prisma
+
+app.put('/atualizar-contratante/:id', async (req, res) => {
+    const { id } = req.params;  // Obtém o id do contratante da URL
+    const { email, senha, telefone, cidade } = req.body;  // Recebe os dados para atualização
+
+    try {
+        // Atualiza os dados no banco de dados
+        const contratanteAtualizado = await prisma.user.update({
+            where: { id: id },
+            data: {
+                email: email,
+                senha: senha,
+                telefone: telefone,
+                cidade: cidade
+            }
+        });
+
+        res.status(200).json(contratanteAtualizado); // Retorna o contratante atualizado
+    } catch (error) {
+        console.error('Erro ao atualizar o contratante:', error);
+        res.status(500).json({ error: 'Erro ao atualizar o contratante' });
+    }
+});
+
 
 
 
