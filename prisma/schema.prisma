@@ -15,7 +15,7 @@ datasource db {
 
 model User {
   id                String   @id @default(auto()) @map("_id") @db.ObjectId
-  email             String
+  email             String  @unique
   senha          String
   telefone    String
   cidade    String
@@ -50,7 +50,7 @@ model Contato {
 
 model Profissional {
   id                String   @id @default(auto()) @map("_id") @db.ObjectId
-  email   String
+  email   String  @unique
   senha   String
   telefone    String
   cidade      String
