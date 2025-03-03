@@ -133,7 +133,7 @@ app.post('/servico', async (req, res) => {
                 categoria: req.body.categoria,
                 preco: req.body.preco,
                 pagamento: req.body.pagamento,
-                email: req.body.email
+                identificacao: req.body.identificacao
              }
         })
 
@@ -144,6 +144,15 @@ app.post('/servico', async (req, res) => {
 })
 
 // Pegar serviços através da categoria
+
+app.get('/get-servicos', async (req, res) => {
+    try {
+        const servicos = await prisma.servico.findMany();  // Recupera todos os serviços do banco
+        res.status(200).json(servicos);  // Retorna os serviços encontrados
+    } catch (error) {
+        res.status(500).json({ error: 'Erro ao buscar serviços' });
+    }
+});
 
 // excluir serviço
 
@@ -170,6 +179,16 @@ app.post('/categoria', async (req, res) => {
 //apagar categoria
 
 //buscar categorias
+
+app.get('/get-categorias', async (req,res) => {
+    try {
+        const categorias = await prisma.categorias.findMany();
+
+        res.status(200).json(categorias);
+    } catch (error) {
+        res.status(500).json({message: 'erro ao procurar categorias.'})
+    }
+})
 
 
 //Criar conta profissional
@@ -358,6 +377,25 @@ app.put('/atualizar-contratante/:id', async (req, res) => {
 });
 
 
+// ajuda e suporte
+
+app.post('/ajuda', async (req, res)=> {
+    try {
+        const ajuda = await prisma.ajuda.create({
+            data: {
+                email: req.body.email,
+                detalhes: req.body.detalhes,
+
+            }
+        })
+
+        res.status(200).json({message: 'mensagem enviada com sucesso'})
+    } catch (error) {
+        res.status(500).json({message: 'Erro ao tentar entrar em contato'})
+    }
+})
+
+//pegar ajuda e suporte
 
 
 

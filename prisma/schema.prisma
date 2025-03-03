@@ -75,3 +75,10 @@ model Servico {
   identificacao     String
   createdAt DateTime @default(now()) // Data de criação da conta
 }
+
+model Ajuda {
+  id                String   @id @default(auto()) @map("_id") @db.ObjectId
+  email String
+  detalhes    String
+  createdAt DateTime @default(now()) // Data de criação da conta
+}
