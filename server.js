@@ -133,7 +133,9 @@ app.post('/servico', async (req, res) => {
                 categoria: req.body.categoria,
                 preco: req.body.preco,
                 pagamento: req.body.pagamento,
-                identificacao: req.body.identificacao
+                identificacao: req.body.identificacao,
+                email: req.body.email,
+                numero: req.body.numero
              }
         })
 
@@ -398,6 +400,27 @@ app.post('/ajuda', async (req, res)=> {
 //pegar ajuda e suporte
 
 
+// Verificacao
+
+app.post('/verificacao', async (req, res) => {
+    try {
+        const verificacao = await prisma.verificacao.create({
+            data: {
+                contato: req.body.contato,
+                profissao: req.body.profissao,
+                cnpj: req.body.cnpj
+            }
+        })
+
+        res.status(200).json({message: 'verificação envida para avaliação'})
+    } catch (error) {
+        res.status(500).json({message: 'erro ao tentar enviar verificação'})
+    }
+})
+
+//avaliação
+
+//pegar avaliações
 
 
 

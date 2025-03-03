@@ -73,6 +73,8 @@ model Servico {
   preco         String
   pagamento   String
   identificacao     String
+  email       String
+  numero      String
   createdAt DateTime @default(now()) // Data de criação da conta
 }
 
@@ -80,5 +82,20 @@ model Ajuda {
   id                String   @id @default(auto()) @map("_id") @db.ObjectId
   email String
   detalhes    String
+  createdAt DateTime @default(now()) // Data de criação da conta
+}
+
+model Verificacao {
+  id                String   @id @default(auto()) @map("_id") @db.ObjectId
+  contato     String
+  profissao    String
+  cnpj    String?
+  createdAt DateTime @default(now()) // Data de criação da conta
+}
+
+model Avaliacao {
+  id                String   @id @default(auto()) @map("_id") @db.ObjectId
+  servico   String
+  Avaliacao String
   createdAt DateTime @default(now()) // Data de criação da conta
 }
