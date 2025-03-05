@@ -160,6 +160,21 @@ app.get('/get-servicos', async (req, res) => {
 
 // excluir serviço
 
+app.delete('/delete-servico/:id', async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        // Excluir o serviço com o ID fornecido
+        const servicoExcluido = await prisma.servico.delete({
+            where: { id: id }
+        });
+        res.json(servicoExcluido);
+    } catch (error) {
+        console.error('Erro ao excluir o serviço:', error);
+        res.status(500).json({ error: 'Erro ao excluir o serviço' });
+    }
+});
+
 // editar serviço
 
 //Criar uma categoria
@@ -251,11 +266,40 @@ app.get('/get-profissionais', async (req, res) => {
     }
 });
 
-//excluir conta profissional 
+//redefinir senha profissional
+
+app.put('/user/edit-password-profissional', async (req, res) => {
+    const { email, novaSenha } = req.body;
+  
+    // Verificar se os dados necessários foram fornecidos
+    if (!email || !novaSenha) {
+      return res.status(400).json({ message: 'Email e nova senha são obrigatórios' });
+    }
+  
+    try {
+      // Verificar se o usuário existe com o email fornecido
+      const user = await prisma.profissional.findUnique({
+        where: { email: email }
+      });
+  
+      if (!user) {
+        return res.status(404).json({ message: 'Usuário não encontrado' });
+      }
+  
+      // Atualizar a senha do usuário
+      const updatedUser = await prisma.profissional.update({
+        where: { email: email },
+        data: { senha: novaSenha }
+      });
+  
+      res.status(200).json({ message: 'Senha atualizada com sucesso', user: updatedUser });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Erro ao atualizar a senha' });
+    }
+  });
 
 //editar conta
-
-// Supondo que você tenha um modelo Profissional já configurado no Prisma
 
 app.put('/atualizar-profissional/:id', async (req, res) => {
     const { id } = req.params;  // Obtém o id do profissional da URL
@@ -351,7 +395,38 @@ app.get('/get-contratantes', async (req, res) => {
 });
   
 
-// excluir conta como contratante
+// redefinir senha
+
+app.put('/user/edit-password', async (req, res) => {
+    const { email, novaSenha } = req.body;
+  
+    // Verificar se os dados necessários foram fornecidos
+    if (!email || !novaSenha) {
+      return res.status(400).json({ message: 'Email e nova senha são obrigatórios' });
+    }
+  
+    try {
+      // Verificar se o usuário existe com o email fornecido
+      const user = await prisma.user.findUnique({
+        where: { email: email }
+      });
+  
+      if (!user) {
+        return res.status(404).json({ message: 'Usuário não encontrado' });
+      }
+  
+      // Atualizar a senha do usuário
+      const updatedUser = await prisma.user.update({
+        where: { email: email },
+        data: { senha: novaSenha }
+      });
+  
+      res.status(200).json({ message: 'Senha atualizada com sucesso', user: updatedUser });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Erro ao atualizar a senha' });
+    }
+});
 
 // editar conta contratante
 
