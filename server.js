@@ -324,6 +324,25 @@ app.put('/atualizar-profissional/:id', async (req, res) => {
     }
 });
 
+//deletar profissional
+
+app.delete('/delete-profissional/:id', async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        // Deleta o usuário com o ID fornecido
+        const userExcluido = await prisma.profissional.delete({
+            where: { id: id }
+        });
+
+        // Retorna uma resposta de sucesso
+        res.json({ message: 'Usuário excluído com sucesso', userExcluido });
+    } catch (error) {
+        console.error('Erro ao excluir o usuário:', error);
+        res.status(500).json({ error: 'Erro ao excluir o usuário' });
+    }
+});
+
 
 //Usuario normal 
 
@@ -450,6 +469,25 @@ app.put('/atualizar-contratante/:id', async (req, res) => {
     } catch (error) {
         console.error('Erro ao atualizar o contratante:', error);
         res.status(500).json({ error: 'Erro ao atualizar o contratante' });
+    }
+});
+
+// excluir contratante
+
+app.delete('/delete-user/:id', async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        // Deleta o usuário com o ID fornecido
+        const userExcluido = await prisma.user.delete({
+            where: { id: id }
+        });
+
+        // Retorna uma resposta de sucesso
+        res.json({ message: 'Usuário excluído com sucesso', userExcluido });
+    } catch (error) {
+        console.error('Erro ao excluir o usuário:', error);
+        res.status(500).json({ error: 'Erro ao excluir o usuário' });
     }
 });
 
