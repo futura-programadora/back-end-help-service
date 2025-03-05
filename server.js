@@ -1,6 +1,8 @@
 import express from 'express';
 import { PrismaClient } from '@prisma/client';
 import cors from 'cors';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import axios from 'axios'; 
 
 const prisma = new PrismaClient();
@@ -353,8 +355,6 @@ app.get('/get-contratantes', async (req, res) => {
 
 // editar conta contratante
 
-// Exemplo com Express e Prisma
-
 app.put('/atualizar-contratante/:id', async (req, res) => {
     const { id } = req.params;  // Obtém o id do contratante da URL
     const { email, senha, telefone, cidade } = req.body;  // Recebe os dados para atualização
@@ -420,8 +420,56 @@ app.post('/verificacao', async (req, res) => {
 
 //avaliação
 
+app.post('/avaliacao', async (req, res) => {
+    const { servico, avaliacao } = req.body;
+  
+    try {
+      // Criar uma nova avaliação no banco de dados
+      const novaAvaliacao = await prisma.avaliacao.create({
+        data: {
+          servico: servico,
+          avaliacao: avaliacao,
+        },
+      });
+  
+      res.status(200).json({ message: 'Avaliação salva com sucesso!', novaAvaliacao });
+    } catch (error) {
+      console.error('Erro ao salvar avaliação:', error);
+      res.status(500).json({ message: 'Erro ao salvar avaliação' });
+    }
+});
+  
+
 //pegar avaliações
 
+app.get('/get-avaliacoes', async (req, res) => {
+    try {
+        const avaliacoes = await prisma.avaliacao.findMany();
+
+        res.status(200).json(avaliacoes); 
+
+    } catch (error) {
+        res.status(500).json({message: 'erro ao pegar avaliações'})
+    }
+})
+
+//Pegar patrocinados
+
+app.get('/get-patrocinados', async (req, res) => {
+    try {
+        const patrocinado = await prisma.patrocinados.findMany();  // Certifique-se de que a consulta esteja correta
+
+        // Verifique se a consulta retornou dados válidos
+        if (!patrocinado) {
+            return res.status(404).json({ message: 'Nenhum patrocinado encontrado.' });
+        }
+
+        res.status(200).json(patrocinado);  // Retorna os dados para o frontend
+    } catch (error) {
+        console.error('Erro ao buscar patrocinados:', error);  // Exibe o erro no servidor
+        res.status(500).json({ message: 'Erro ao buscar patrocinados' });
+    }
+});
 
 
 // Iniciar o servidor

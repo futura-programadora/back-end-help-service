@@ -78,6 +78,14 @@ model Servico {
   createdAt DateTime @default(now()) // Data de criação da conta
 }
 
+model Patrocinados {
+  id                String   @id @default(auto()) @map("_id") @db.ObjectId
+  servico   String
+  identificacao   String
+  img     String
+  createdAt DateTime @default(now()) // Data de criação da conta
+}
+
 model Ajuda {
   id                String   @id @default(auto()) @map("_id") @db.ObjectId
   email String
@@ -96,6 +104,6 @@ model Verificacao {
 model Avaliacao {
   id                String   @id @default(auto()) @map("_id") @db.ObjectId
   servico   String
-  Avaliacao String
+  avaliacao String
   createdAt DateTime @default(now()) // Data de criação da conta
 }
